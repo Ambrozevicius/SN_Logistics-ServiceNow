@@ -299,7 +299,7 @@ Eu queria fazer algo
 - divertido
 - e que parecesse um projeto real
 
-E isso eu consegui 
+E acho que deu bom 
 
 ---
 
