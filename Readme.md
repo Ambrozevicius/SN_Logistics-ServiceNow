@@ -10,12 +10,12 @@
 
 This project started in March 2026 when I began studying for the ServiceNow CAD (Certified Application Developer) certification.
 
-At first, the idea was just to build something simple to practice:
+At first, the idea was just to build something simple to practice
 - GlideRecord
 - Business Rules
 - REST APIs
 
-Then I had the brilliant idea of:
+Then I had the brilliant idea of
 
 ```text
 "what if I build an entire logistics app... like the postal service?"
@@ -25,7 +25,7 @@ Then I had the brilliant idea of:
 
 The problem is that I was still learning half of the stuff.
 
-So this project basically became:
+So this project basically became
 - tutorials
 - ServiceNow documentation (A LOT)
 - debugging (A LOT TOO)
@@ -44,13 +44,13 @@ This was probably one of the projects that taught me ServiceNow the most.
 
 SN Logistics is a shipment tracking portal built entirely inside ServiceNow.
 
-You enter a tracking number and the system:
+You enter a tracking number and the system
 - searches the shipment
 - calls a Scripted REST API
 - returns the data
 - displays everything in a custom interface
 
-All using:
+All using
 - Service Portal
 - Custom Widgets
 - AngularJS
@@ -85,7 +85,7 @@ The entire UI was built using Service Portal widgets.
 I didn’t want to create another fully white default-looking ServiceNow portal  
 (little did I know this would become 10x more work)
 
-So I tried to make something more modern:
+So I tried to make something more modern
 - glassmorphism
 - keyframe animations (the blue icons move 👀)
 - dark mode
@@ -104,7 +104,7 @@ So I tried to make something more modern:
 
 ## 1. Shipment
 
-The shipment stores:
+The shipment stores
 - sender
 - recipient
 - route
@@ -121,10 +121,10 @@ The shipment stores:
 
 ## 2. Tracking Number
 
-When a shipment is created:
+When a shipment is created
 - a Business Rule automatically generates a tracking number
 
-Example:
+Example
 
 ```text
 SN560240832BR
@@ -134,17 +134,17 @@ SN560240832BR
 
 ## 3. Tracking
 
-The user enters the tracking number:
+The user enters the tracking number
 
 ![alt text](./img/input.png)
 
-The widget calls this API:
+The widget calls this API
 
 ```text
 /api/x_1762041_sn_log_0/sn_logistics_api/track/{tracking_number}
 ```
 
-The API performs a GlideRecord query and returns:
+The API performs a GlideRecord query and returns
 - status
 - current center
 - recipient
@@ -157,7 +157,7 @@ The API performs a GlideRecord query and returns:
 
 This was probably one of the parts that taught me the most.
 
-I struggled A LOT trying to understand:
+I struggled A LOT trying to understand
 - request
 - response
 - path params
@@ -173,7 +173,7 @@ I struggled A LOT trying to understand:
 
 I spent ALMOST 2 HOURS trying to figure out why the estimated delivery was NOT showing up on the portal.
 
-I reviewed:
+I reviewed
 - widget
 - Angular
 - API
@@ -183,7 +183,7 @@ I reviewed:
 - JSON
 - literally everything
 
-Just to discover that the field name was:
+Just to discover that the field name was
 
 ```text
 Esimated Delivery
@@ -203,7 +203,7 @@ debug scars.
 
 # Scheduled Job
 
-I also created a scheduler that:
+I also created a scheduler that
 - updates statuses
 - moves shipments
 - marks shipments as delayed
@@ -217,7 +217,7 @@ It actually started feeling like a living system updating itself in real time.
 
 # Business Rules
 
-There are several BRs in the project:
+There are several BRs in the project
 - Generate Tracking Number
 - Create Initial Tracking
 - Create Tracking Event
@@ -233,7 +233,7 @@ But they work 😭
 
 # Dark Mode
 
-The dark mode was implemented using class toggles inside the widget:
+The dark mode was implemented using class toggles inside the widget
 
 ```javascript
 pagina.classList.toggle('light');
@@ -254,7 +254,7 @@ let's ignore the fact that the toggle button is misaligned ok
 
 I also tried to make the portal at least somewhat responsive.
 
-So it works relatively well on:
+So it works relatively well on
 - desktop
 - mobile
 
@@ -280,7 +280,7 @@ So it works relatively well on:
 
 # What I learned
 
-This project taught me A LOT about:
+This project taught me A LOT about
 - architecture inside ServiceNow
 - how APIs work
 - debugging
@@ -290,7 +290,7 @@ This project taught me A LOT about:
 - data flow
 - application structure
 
-But most importantly:
+But most importantly
 
 how to solve problems.
 
@@ -304,19 +304,19 @@ This project is NOT perfect.
 
 And honestly, that was never the goal.
 
-I wanted to build something:
+I wanted to build something
 - functional
 - visually cool
 - fun
 - and that felt like a real project
 
-And I think it turned out pretty well :)
+And I think it turned out pretty well )
 
 ---
 
 # Next steps
 
-Things I still want to add:
+Things I still want to add
 - tracking timeline
 - authentication
 - admin dashboard
