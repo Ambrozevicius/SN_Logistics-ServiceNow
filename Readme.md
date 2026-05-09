@@ -228,10 +228,6 @@ pagina.classList.toggle('light');
 pagina.classList.toggle('dark');
 ```
 
-Simples.
-Sem framework absurdo.
-Sem complicação.
-
 E honestamente?
 Foi uma das partes que mais gostei do resultado final.
 
