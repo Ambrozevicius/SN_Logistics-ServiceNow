@@ -1,0 +1,46 @@
+<div class="sn-logistics-widget">
+    <div class="pagina" id="pagina">
+        <button id="theme-toggle" ng-click="trocarcor()"><i class="bx bx-sun" id="theme-icon"></i></button>
+        <div class="conteiner">
+            <div class="topo">
+                <div class="texto-topo">
+                    <h1>SN Logistics</h1>
+                    <p class="subtitulo">Track your shipment in real time with a modern logistics platform.</p>
+                    <div class="caixa-rastreio">
+                        <input
+    						type="text"
+    						id="input-rastreio"
+    						ng-model="trackingNumber"
+    						placeholder="SN000000000BR">
+                        <button id="botao-rastrear" ng-click="buscarShipment()">Rastrear</button>
+                    </div>
+                  		<p class="erro-rastreio" ng-if="erro">{{erro}}</p>
+                </div>
+                <div class="caixa-icones">
+                    <i class="bx bx-envelope icone-flutuando"></i>
+                    <i class="bx bx-user-circle icone-flutuando delay"></i>
+                </div>
+            </div>
+            <div class="card-resultado">
+                <h2>Informações do envio</h2>
+                <div class="linha-info">
+                    <span>Status</span>
+                    <p id="status-envio">{{shipment.status}}</p>
+                </div>
+                <div class="linha-info">
+                    <span>Centro atual</span>
+                    <p id="centro-atual">{{shipment.current_center}}</p>
+                </div>
+                <div class="linha-info">
+                    <span>Entrega estimada</span>
+                    <p id="entrega-estimada">{{shipment.estimated_delivery}}</p>
+                </div>
+                <div class="linha-info">
+                    <span>Destinatário</span>
+                    <p id="destinatario">{{shipment.recipient}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
