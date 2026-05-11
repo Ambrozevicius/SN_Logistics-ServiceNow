@@ -225,10 +225,6 @@ There are several BRs in the project
 - Status Auto
 - Update Current Center
 
-Some of them are slightly broken.
-
-But they work 😭
-
 ---
 
 # Dark Mode
