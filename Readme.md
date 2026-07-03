@@ -1,329 +1,296 @@
-# SN Logistics ✉️
+# SN Logistics
 
-> Track your shipment in real time with a modern logistics platform.
+ServiceNow-based logistics tracking application with shipment management, automated status updates, tracking events, and a custom Service Portal interface.
 
-![alt text](./img/banner.png)
-
----
-
-# About the project
-
-This project started in March 2026 when I began studying for the ServiceNow CAD (Certified Application Developer) certification.
-
-At first, the idea was just to build something simple to practice
-- GlideRecord
-- Business Rules
-- REST APIs
-
-Then I had the brilliant idea of
-
-```text
-"what if I build an entire logistics app... like the postal service?"
-```
-
-😭
-
-The problem is that I was still learning half of the stuff.
-
-So this project basically became
-- tutorials
-- ServiceNow documentation (A LOT)
-- debugging (A LOT TOO)
-- suffering (WAY TOO MUCH)
-- coffee (my teeth almost turned yellow)
-- more debugging
-- me breaking things that were already working
-
-But honestly...
-
-This was probably one of the projects that taught me ServiceNow the most.
+![SN Logistics Banner](./img/banner.png)
 
 ---
 
-# What is SN Logistics?
+## Overview
 
-SN Logistics is a shipment tracking portal built entirely inside ServiceNow.
+SN Logistics is a custom logistics tracking application built on the ServiceNow Platform.
 
-You enter a tracking number and the system
-- searches the shipment
-- calls a Scripted REST API
-- returns the data
-- displays everything in a custom interface
+The project was developed as a hands-on learning initiative while studying for the ServiceNow Certified Application Developer (CAD) certification. The main goal was to apply platform development concepts in a practical scenario, including custom tables, Business Rules, automation logic, Scheduled Jobs, Service Portal widgets, GlideRecord, and Scripted REST APIs.
 
-All using
-- Service Portal
-- Custom Widgets
-- AngularJS
-- GlideRecord
-- Business Rules
-- Scheduled Jobs
-- Scripted REST API
+The application simulates a shipment tracking system where users can search for a tracking number and view shipment information through a custom portal interface.
 
 ---
 
-# Features
+## Project Objectives
 
-✅ Shipment tracking  
-✅ Dark mode / Light mode  
-✅ Responsive interface  
-✅ Custom REST API  
-✅ Automatic status updates  
-✅ Automatic tracking events  
-✅ Automatic tracking number generation  
-✅ Route system  
-✅ Delivery simulation  
-✅ Delay system  
-✅ Fully customized UI  
-✅ Notification workflow
+The main objectives of this project were to:
+
+* Build a functional application inside ServiceNow
+* Practice ServiceNow application development concepts
+* Implement business logic using Business Rules
+* Create and consume a Scripted REST API
+* Develop a custom Service Portal experience
+* Automate shipment status updates
+* Structure data relationships between shipments, routes, centers, and tracking events
+* Improve debugging, platform scripting, and application design skills
 
 ---
 
-# The portal
+## What the Application Does
 
-The entire UI was built using Service Portal widgets.
+SN Logistics allows users to track shipments using a generated tracking number.
 
-I didn’t want to create another fully white default-looking ServiceNow portal  
-(little did I know this would become 10x more work)
+When a tracking number is submitted through the portal, the system:
 
-So I tried to make something more modern
-- glassmorphism
-- keyframe animations (the blue icons move 👀)
-- dark mode
-- gradients
-- hover effects
-- floating icons
-- cleaner layout
+1. Receives the tracking number from the user interface
+2. Calls a custom Scripted REST API
+3. Searches for the shipment using GlideRecord
+4. Returns shipment data in JSON format
+5. Displays the tracking information in a custom Service Portal widget
 
-![alt text](./img/SP_branco.png)
-
-![alt text](./img/SP_preto.png)
+The returned data includes shipment status, current logistics center, recipient, estimated delivery date, and tracking number.
 
 ---
 
-# How it works
+## Main Features
 
-## 1. Shipment
-
-The shipment stores
-- sender
-- recipient
-- route
-- current center
-- status
-- estimated delivery time
-- shipping type
-
-![alt text](./img/forms_parte1.png)
-
-![alt text](./img/forms_parte2.png)
+* Shipment tracking by tracking number
+* Automatic tracking number generation
+* Custom Scripted REST API
+* Service Portal tracking interface
+* Dark mode and light mode support
+* Responsive portal layout
+* Automated shipment status updates
+* Automatic tracking event creation
+* Route-based shipment structure
+* Delivery simulation
+* Delay handling
+* Notification workflow
+* Custom Business Rules
+* Scheduled Job for shipment processing
 
 ---
 
-## 2. Tracking Number
+## Service Portal
 
-When a shipment is created
-- a Business Rule automatically generates a tracking number
+The user-facing interface was built using Service Portal widgets.
 
-Example
+The portal was designed to provide a more modern and user-friendly experience compared to a standard ServiceNow interface. It includes a custom layout, responsive behavior, dark/light mode support, animations, and visual shipment tracking components.
+
+### Light Mode
+
+![Service Portal Light Mode](./img/SP_branco.png)
+
+### Dark Mode
+
+![Service Portal Dark Mode](./img/SP_preto.png)
+
+---
+
+## Shipment Record
+
+Each shipment record stores the main information required to track and process a delivery.
+
+The shipment includes:
+
+* Sender
+* Recipient
+* Route
+* Current logistics center
+* Shipment status
+* Estimated delivery date
+* Shipping type
+* Tracking number
+
+![Shipment Form Part 1](./img/forms_parte1.png)
+
+![Shipment Form Part 2](./img/forms_parte2.png)
+
+---
+
+## Tracking Number Generation
+
+When a new shipment is created, a Business Rule automatically generates a unique tracking number.
+
+Example:
 
 ```text
 SN560240832BR
 ```
 
+This tracking number is later used by the portal and the Scripted REST API to retrieve shipment information.
+
 ---
 
-## 3. Tracking
+## Tracking Flow
 
-The user enters the tracking number
+The tracking process works as follows:
 
-![alt text](./img/input.png)
+1. The user enters a tracking number in the Service Portal
+2. The widget sends a request to the Scripted REST API
+3. The API searches the shipment table using GlideRecord
+4. The API returns the shipment data as JSON
+5. The widget displays the response in the portal interface
 
-The widget calls this API
+![Tracking Input](./img/input.png)
+
+API endpoint:
 
 ```text
 /api/x_1762041_sn_log_0/sn_logistics_api/track/{tracking_number}
 ```
 
-The API performs a GlideRecord query and returns
-- status
-- current center
-- recipient
-- estimated delivery
-- tracking number
+The API response includes:
+
+* Shipment status
+* Current logistics center
+* Recipient
+* Estimated delivery date
+* Tracking number
 
 ---
 
-# Scripted REST API
+## Scripted REST API
 
-This was probably one of the parts that taught me the most.
+A custom Scripted REST API was created to expose shipment tracking data.
 
-I struggled A LOT trying to understand
-- request
-- response
-- path params
-- JSON
-- API returns
-- debugging
+This part of the project was especially important for practicing:
 
-![alt text](./img/rest.png)
+* REST API structure
+* Path parameters
+* Request and response handling
+* JSON responses
+* GlideRecord queries
+* API debugging
+* Data validation
 
----
-
-# The most absurd bug in the project
-
-I spent ALMOST 2 HOURS trying to figure out why the estimated delivery was NOT showing up on the portal.
-
-I reviewed
-- widget
-- Angular
-- API
-- Business Rule
-- GlideRecord
-- response
-- JSON
-- literally everything
-
-Just to discover that the field name was
-
-```text
-Esimated Delivery
-```
-
-WITHOUT THE "T".
-
-😭😭😭😭😭😭😭😭😭
-
-And how did I fix it?
-
-I updated everything that referenced "estimated delivery" to "esimated delivery" instead of renaming the field 💀
-
-debug scars.
+![Scripted REST API](./img/rest.png)
 
 ---
 
-# Scheduled Job
+## Scheduled Job
 
-I also created a scheduler that
-- updates statuses
-- moves shipments
-- marks shipments as delayed
-- automatically delivers shipments
+A Scheduled Job was implemented to simulate shipment movement and automate status changes over time.
 
-![alt text](./img/scheduled%20job.png)
+The Scheduled Job is responsible for:
 
-It actually started feeling like a living system updating itself in real time.
+* Updating shipment statuses
+* Moving shipments between logistics centers
+* Marking shipments as delayed when applicable
+* Completing deliveries automatically
+* Creating tracking updates during the shipment lifecycle
 
----
+![Scheduled Job](./img/scheduled%20job.png)
 
-# Business Rules
-
-There are several BRs in the project
-- Generate Tracking Number
-- Create Initial Tracking
-- Create Tracking Event
-- Validate Status Transition
-- Status Auto
-- Update Current Center
+This helped make the application behave more like a real logistics system, where shipment data changes over time without manual intervention.
 
 ---
 
-# Dark Mode
+## Business Rules
 
-The dark mode was implemented using class toggles inside the widget
+Several Business Rules were created to handle application logic and automate key processes.
+
+Main Business Rules include:
+
+* Generate Tracking Number
+* Create Initial Tracking
+* Create Tracking Event
+* Validate Status Transition
+* Status Auto
+* Update Current Center
+
+These rules support data consistency, automate repetitive actions, and ensure that shipment records follow the expected lifecycle.
+
+---
+
+## Dark Mode and Light Mode
+
+The portal includes support for both dark mode and light mode.
+
+The theme is handled through class toggles inside the widget logic:
 
 ```javascript
 pagina.classList.toggle('light');
 pagina.classList.toggle('dark');
 ```
 
-And honestly?
-
-This was one of my favorite parts of the final result.
-
-![alt text](./img/SP_preto.png)
-
-let's ignore the fact that the toggle button is misaligned ok
+![Dark Mode Portal](./img/SP_preto.png)
 
 ---
 
-# Responsiveness
+## Responsiveness
 
-I also tried to make the portal at least somewhat responsive.
+The portal was designed to be usable on different screen sizes, including desktop and mobile views.
 
-So it works relatively well on
-- desktop
-- mobile
-
-![alt text](./img/responsivo.png)
+![Responsive Layout](./img/responsivo.png)
 
 ---
 
-# Technologies used
+## Technologies Used
 
-- ServiceNow
-- Service Portal
-- AngularJS
-- JavaScript
-- GlideRecord
-- Scripted REST API
-- Business Rules
-- Scheduled Jobs
-- HTML
-- CSS
-- Boxicons
-
----
-
-# What I learned
-
-This project taught me A LOT about
-- architecture inside ServiceNow
-- how APIs work
-- debugging
-- portals
-- widgets
-- GlideRecord
-- data flow
-- application structure
-
-But most importantly
-
-how to solve problems.
-
-![alt text](./img/KKKKKKKKKKK.png)
+* ServiceNow Platform
+* Service Portal
+* AngularJS
+* JavaScript
+* GlideRecord
+* Scripted REST API
+* Business Rules
+* Scheduled Jobs
+* HTML
+* CSS
+* Boxicons
 
 ---
 
-# Important notes
+## Key Learnings
 
-This project is NOT perfect.
+This project helped me improve my understanding of several important ServiceNow development concepts, including:
 
-And honestly, that was never the goal.
+* Application structure inside ServiceNow
+* Custom table design
+* Business Rules and server-side logic
+* GlideRecord queries
+* Scripted REST API development
+* Service Portal widgets
+* Client-side and server-side data flow
+* Debugging ServiceNow applications
+* Workflow automation
+* UI customization inside Service Portal
 
-I wanted to build something
-- functional
-- visually cool
-- fun
-- and that felt like a real project
-
-And I think it turned out pretty well )
-
----
-
-# Next steps
-
-Things I still want to add
-- tracking timeline
-- authentication
-- admin dashboard
-- route map
-- full tracking history
+The project also helped me better understand how enterprise applications connect data, logic, automation, and user experience inside a single platform.
 
 ---
 
-# Developed by
+## Current Limitations
 
-Isaac Ambrozevicius
+This project was created as a learning and portfolio project, so there are still areas that can be improved.
 
-CSA Certified System Administrator — ServiceNow  
-CAD Certified Application Developer — ServiceNow
+Current limitations include:
+
+* No authentication layer for external users
+* No admin dashboard
+* No full shipment history view in the portal
+* No route map visualization
+* Some internal naming conventions could be improved
+* Limited error handling in some user scenarios
+
+---
+
+## Future Improvements
+
+Planned improvements include:
+
+* Add a full tracking timeline
+* Improve portal responsiveness
+* Add authentication and role-based access
+* Create an admin dashboard
+* Add route map visualization
+* Improve tracking event history
+* Refactor internal naming conventions
+* Improve API error handling
+* Add more detailed shipment lifecycle rules
+
+---
+
+## Author
+
+Developed by Isaac Ambrozevicius.
+
+ServiceNow Certified System Administrator
+ServiceNow Certified Application Developer
+ServiceNow Certified Implementation Specialist – Data Foundations
