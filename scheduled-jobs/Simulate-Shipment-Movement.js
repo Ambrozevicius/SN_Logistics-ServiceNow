@@ -41,7 +41,6 @@ while (shipmentGR.next()) {
     }
 
     // aqui move entre os centros da rota
-    // meu deus que codigo quebrado KKKKKKK
     if (shipmentGR.status == 'in_transit') {
 
         var stepGR = new GlideRecord('x_1762041_sn_log_0_route_step');
