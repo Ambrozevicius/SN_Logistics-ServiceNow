@@ -291,6 +291,6 @@ Planned improvements include:
 
 Developed by Isaac Ambrozevicius.
 
-ServiceNow Certified System Administrator
-ServiceNow Certified Application Developer
-ServiceNow Certified Implementation Specialist – Data Foundations
+* ServiceNow Certified System Administrator
+* ServiceNow Certified Application Developer
+* ServiceNow Certified Implementation Specialist – Data Foundations
