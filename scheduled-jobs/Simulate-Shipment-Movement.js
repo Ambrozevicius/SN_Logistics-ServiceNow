@@ -66,7 +66,7 @@ while (shipmentGR.next()) {
 
                 } else {
 
-                    // ultima parada da rota
+                    // ultima parada da rota (fim)
                     shipmentGR.status = 'out_for_delivery';
 
                     shipmentGR.update();
