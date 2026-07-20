@@ -22,7 +22,7 @@
         result.tracking_number = shipmentGR.getValue('number');
         result.status = shipmentGR.getValue('status');
         result.current_center = shipmentGR.getDisplayValue('current_center');
-		//KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK duas horas debuggando pra descobrir que eu escrevi errado
+		//KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK três dias debuggando pra descobrir que eu escrevi errado
         result.estimated_delivery = shipmentGR.getDisplayValue('esimated_delivery').split(' ')[0];
         result.recipient = shipmentGR.getDisplayValue('recipient');
 
