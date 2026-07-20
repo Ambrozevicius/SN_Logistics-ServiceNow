@@ -391,9 +391,7 @@ O projeto permitiu desenvolver uma compreensão mais prática sobre:
 
 Mais do que praticar funcionalidades isoladas, o principal aprendizado foi compreender como diferentes camadas de uma aplicação se conectam.
 
-O projeto exigiu integrar dados, regras de negócio, automações, APIs e interface em um único fluxo funcional.
-
-![Project Learning](./img/KKKKKKKKKKK.png)
+O projeto exigiu integrar dados, BRs, automações, APIs e interface em um único fluxo funcional.
 
 ---
 
