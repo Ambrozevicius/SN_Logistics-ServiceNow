@@ -1,6 +1,6 @@
 # SN Logistics
 
-> Aplicação de rastreamento logístico desenvolvida na plataforma ServiceNow, com gerenciamento de remessas, atualização automática de status, eventos de rastreamento, API REST e uma interface customizada no Service Portal.
+> O SN Logistics é uma aplicação de rastreamento logístico desenvolvido na plataforma ServiceNow, com gerenciamento de remessas, atualização automática de status, eventos de rastreamento, API REST e uma interface customizada no Service Portal.
 
 ![SN Logistics Banner](./img/banner.png)
 
@@ -20,9 +20,9 @@ Inicialmente, a ideia era desenvolver uma aplicação simples para praticar conc
 - Automação de processos
 - Desenvolvimento de widgets no Service Portal
 
-Durante o desenvolvimento, o projeto evoluiu para uma aplicação mais completa, inspirada em sistemas de rastreamento de encomendas, como os utilizados por transportadoras e serviços postais.
+Durante o desenvolvimento, o projeto evoluiu para uma aplicação mais completa, inspirada no sistema de rastreamento de encomendas dos Correios.
 
-O principal objetivo foi conectar diferentes recursos da plataforma em uma única solução, combinando modelagem de dados, lógica de negócio, automações, APIs e experiência do usuário.
+O principal objetivo foi conectar diferentes recursos da plataforma em uma única solução, combinando modelagem de dados, lógica de negócio, automações, APIs, experiência do usuário e aprender com tudo isso.
 
 ---
 
@@ -51,19 +51,18 @@ Por meio do portal, o usuário pode inserir um código de rastreamento e consult
 O sistema:
 
 1. Recebe o código de rastreamento informado pelo usuário
-2. Envia uma requisição para uma Scripted REST API
+2. Envia uma requisição para a Scripted REST API
 3. Consulta a remessa correspondente utilizando GlideRecord
 4. Retorna os dados em formato JSON
 5. Exibe as informações em um widget customizado no Service Portal
 
-As informações apresentadas incluem:
+As informações alimentadas pelo Scripted Rest API apresentadas no Service Portal são:
 
 - Código de rastreamento
 - Status atual da encomenda
 - Destinatário
 - Centro logístico atual
 - Previsão de entrega
-- Informações relacionadas à movimentação da remessa
 
 ---
 
@@ -146,7 +145,7 @@ O processo de consulta funciona da seguinte forma:
 ```text
 Usuário informa o código de rastreamento
                     ↓
-Widget do Service Portal
+Widget do Service Portal faz
                     ↓
 Requisição para a Scripted REST API
                     ↓
@@ -174,13 +173,12 @@ Endpoint utilizado:
 /api/x_1762041_sn_log_0/sn_logistics_api/track/{tracking_number}
 ```
 
-A resposta da API inclui informações como:
+A resposta da API inclui os seguintes items:
 
 - Status
 - Centro logístico atual
 - Destinatário
 - Previsão de entrega
-- Código de rastreamento
 
 ---
 
@@ -204,7 +202,7 @@ Durante o desenvolvimento dessa funcionalidade, foram aplicados conceitos como:
 
 ![Scripted REST API](./img/rest.png)
 
-Essa foi uma das partes mais importantes do projeto, pois permitiu compreender melhor como o ServiceNow pode disponibilizar dados para outras interfaces e sistemas.
+Essa foi uma das partes mais importantes do projeto, foi assim que eu entendi melhor como a ServiceNow pode disponibilizar e receber dados de outras interfaces e sistemas.
 
 ---
 
@@ -219,9 +217,9 @@ O portal inclui:
 - Layout personalizado
 - Dark mode e light mode
 - Design responsivo
-- Animações
+- Animações com keyframe
 - Gradientes
-- Ícones customizados
+- Ícones customizados com boxicons
 - Componentes visuais para o rastreamento
 - Tratamento da resposta recebida pela API
 
@@ -257,14 +255,15 @@ A interface foi desenvolvida para funcionar em diferentes tamanhos de tela, incl
 Foram utilizados ajustes de layout e media queries para adaptar os componentes do portal.
 
 ![Responsive Layout](./img/responsivo.png)
+SN Logistics no tamanho de um Iphone SE
 
 ---
 
 ## Business Rules
 
-Foram criadas diferentes Business Rules para implementar validações, automatizar tarefas e manter a consistência dos dados.
+Foram criadas diversas Business Rules para implementar validações, automatizar tarefas e manter a consistência dos dados.
 
-As principais regras incluem:
+As principais BRs incluem:
 
 - **Generate Tracking Number**
 - **Create Initial Tracking**
@@ -273,7 +272,7 @@ As principais regras incluem:
 - **Status Auto**
 - **Update Current Center**
 
-Essas regras são responsáveis por comportamentos como:
+Essas BRs são responsáveis por ações como:
 
 - Gerar o código de rastreamento
 - Criar o primeiro evento da encomenda
@@ -290,7 +289,7 @@ O uso de Business Rules permitiu centralizar parte da lógica server-side e exec
 
 Um Scheduled Job foi desenvolvido para simular a movimentação das encomendas ao longo do tempo.
 
-O job consulta remessas em processamento e executa ações como:
+O Scheduled job consulta shipments em processamento e executa ações como:
 
 - Atualizar o status da encomenda
 - Movimentar remessas entre centros logísticos
@@ -300,26 +299,25 @@ O job consulta remessas em processamento e executa ações como:
 
 ![Scheduled Job](./img/scheduled%20job.png)
 
-Essa automação permitiu simular um sistema logístico ativo, no qual as informações são atualizadas sem a necessidade de alterações manuais em cada registro.
-
-Em um cenário real, esse tipo de atualização poderia ser realizado por integrações com transportadoras, dispositivos externos ou sistemas responsáveis pela operação logística.
+O Scheduled Job permitiu simular um sistema logístico "vivo", no qual as informações são atualizadas sem a necessidade de alterações manuais em cada registro.
 
 ---
 
 ## Automação de notificações
 
-O projeto também inclui uma automação para o envio de notificações relacionadas ao processo de entrega.
+O projeto também inclui um Workflow para o envio de notificações relacionadas ao processo de entrega.
 
 Essa funcionalidade foi utilizada para praticar a criação de processos automatizados e demonstrar como alterações nos registros podem iniciar outras ações dentro da plataforma.
 
+Criei um Workflow bem básico que enviava um email para o Sender e para o Recipient avisando que o shipment "andou" uma etapa. 
+
 ---
 
-## Um dos principais desafios de debugging
+## O principal desafio de debugging
 
-Durante o desenvolvimento, um dos problemas encontrados foi o campo de previsão de entrega não aparecer corretamente no portal.
+Durante o desenvolvimento, o campo de previsão de entrega não aparecia corretamente no portal após a requisição da API, todos os outros valores estavam sendo entregues, menos a previsão de entrega.
 
-Foram revisados:
-
+Revisei meu projeto inteiro,
 - Widget
 - Script client-side
 - Scripted REST API
@@ -328,7 +326,8 @@ Foram revisados:
 - Estrutura do JSON
 - Retorno da API
 
-Após a investigação, foi identificado que o nome interno utilizado no campo havia sido criado como:
+Cogitei até remover o "Entrega estimada", até que,
+Depois de três dias procurando, descobri que o nome interno utilizado no campo (lá na criação das tabelas) tinha sido criado como:
 
 ```text
 Esimated Delivery
@@ -340,15 +339,9 @@ Em vez de:
 Estimated Delivery
 ```
 
-O problema mostrou, de forma prática, como pequenas inconsistências na nomenclatura podem afetar diferentes camadas de uma aplicação.
-
-Além de corrigir a integração, esse caso reforçou a importância de:
-
-- Utilizar padrões de nomenclatura
-- Validar nomes internos dos campos
-- Testar cada camada separadamente
-- Acompanhar o fluxo dos dados do servidor até a interface
-- Utilizar logs e ferramentas de debugging
+Sim, faltou um "T"
+Esse bug mostrou de forma prática como um erro de digitação pode afetar diferentes camadas de uma aplicação.
+Depois disso sempre vejo se escrevi certo qualquer coisa rs.
 
 ---
 
@@ -363,9 +356,9 @@ Além de corrigir a integração, esse caso reforçou a importância de:
 - GlideRecord
 - Business Rules
 - Scripted REST API
+- Workflows
 - Scheduled Jobs
 - Custom Tables
-- Automação de processos
 - Boxicons
 
 ---
@@ -395,45 +388,9 @@ O projeto exigiu integrar dados, BRs, automações, APIs e interface em um únic
 
 ---
 
-## Limitações atuais
-
-O SN Logistics foi desenvolvido como um projeto de estudo e portfólio. Por isso, ainda existem pontos que poderiam ser aprimorados.
-
-Entre as limitações atuais estão:
-
-- Ausência de autenticação para usuários externos
-- Ausência de controle de acesso baseado em funções
-- Tratamento de erros limitado em alguns cenários
-- Ausência de um dashboard administrativo
-- Histórico completo de rastreamento ainda não disponível no portal
-- Ausência de visualização geográfica das rotas
-- Algumas nomenclaturas internas poderiam ser padronizadas
-- Regras do ciclo de vida das remessas poderiam ser mais detalhadas
-
----
-
-## Possíveis melhorias
-
-Entre as melhorias planejadas para versões futuras estão:
-
-- Criar uma timeline completa de rastreamento
-- Implementar autenticação
-- Adicionar controle de acesso baseado em roles
-- Criar um dashboard administrativo
-- Adicionar visualização das rotas em um mapa
-- Exibir o histórico completo de eventos
-- Melhorar o tratamento de erros da API
-- Refatorar nomenclaturas internas
-- Separar melhor as responsabilidades entre as automações
-- Adicionar regras mais detalhadas para o ciclo de vida das remessas
-- Aprimorar a responsividade do portal
-- Implementar testes mais estruturados
-
----
-
 ## Considerações finais
 
-O objetivo do SN Logistics não era reproduzir toda a complexidade de um sistema logístico real, mas desenvolver uma aplicação funcional que conectasse diferentes recursos da plataforma ServiceNow.
+O objetivo do SN Logistics era desenvolver uma aplicação funcional que conectasse diferentes recursos da plataforma ServiceNow.
 
 O projeto começou como uma forma de praticar alguns conceitos do CAD e acabou se tornando uma experiência completa de desenvolvimento.
 
@@ -449,4 +406,4 @@ Desenvolvido por **Isaac Ambrozevicius**.
 
 - ServiceNow Certified System Administrator — CSA
 - ServiceNow Certified Application Developer — CAD
-- ServiceNow Certified Implementation Specialist — Data Foundations
+- ServiceNow Certified Implementation Specialist Data Foudations — CIS-DF
