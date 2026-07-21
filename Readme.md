@@ -255,6 +255,8 @@ A interface foi desenvolvida para funcionar em diferentes tamanhos de tela, incl
 Foram utilizados ajustes de layout e media queries para adaptar os componentes do portal.
 
 ![Responsive Layout](./img/responsivo.png)
+
+
 SN Logistics no tamanho de um Iphone SE
 
 ---
